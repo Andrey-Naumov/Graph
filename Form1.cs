@@ -24,21 +24,23 @@ namespace PressureGraph
         {
             this.chartPressure.Series["Series0"].Points.Clear();
 
-            double h = 2, ky = 2, kx = 2, p = 0.1, p1 = 1.5, x = 100, y = 10;
+            double h = 2, ky = 4, density = 0.4, l1 = 0.5, l2 = 4, a0 = 1.8, a1 = 1.5, m =2;
+            double density1 = l1 * h + l2; 
+            Complex ps = new Complex();
 
-            Complex sum = new Complex();
 
             double a = 0;
             do
             {
-                sum = UnknownFactors.B(h, ky, p, p1, 10, 1, 2, 2, a);
+                double kySnelius = ky * Math.Cos(a * Math.PI / 180d);
 
-                this.chartPressure.Series[0].Points.AddXY(a, Complex.Abs(sum));
+                ps = UnknownFactors.B(h, kySnelius, ky, density, density1, a1, a0, m);
 
-                a += 5;
+                this.chartPressure.Series[0].Points.AddXY(a, Complex.Abs(ps));
+
+                a += 10;
             }
             while (a <= 90);
-            //*   Bessel.EulerFormula((x* kx * Math.Sin(tet * Math.PI / 180d)) + (y *ky * Math.Cos(tet * Math.PI / 180d)));
         }
     }
 }
