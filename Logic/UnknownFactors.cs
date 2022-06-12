@@ -19,7 +19,7 @@ namespace SearchKoef
         {
             return R.Ai(E(h, ky, a1, a0, m)) * X0( ky,  p,  p1,  y,  a1,  a0,  m) - R.Bi(E(h, ky, a1, a0, m));
         }
-
+        
         private static Complex QHDerivative(double h, double ky, double p, double p1, double y, double a1, double a0, double m)
         {
             return R.AiDerivative(E(h, ky, a1, a0, m)) * X0(ky, p, p1, y, a1, a0, m) - R.BiDerivative(E(h, ky, a1, a0, m));
@@ -30,14 +30,9 @@ namespace SearchKoef
             return (new Complex(0, 2 * ky / p1) * Bessel.EulerFormula(-ky * h)) / ((1 / p * QHDerivative(h, ky, p, p1, y, a1, a0, m)) - (new Complex(0, ky / p1) * QH(h, ky, p, p1, y, a1, a0, m)));
         }
 
-        public static Complex B(double h, double ky, double p, double p1, double y, double a1, double a0, double m)
+        public static Complex B(double h, double ky, double p, double p1, double y, double a1, double a0, double m, double a)
         {
-            var test1 =  D(h, ky, p, p1, y, a1, a0, m) * QH(h, ky, p, p1, y, a1, a0, m);
-            var test4 = R.AiDerivative(0);
-            var test3 = QH(h, ky, p, p1, y, a1, a0, m);
-            var test2 = Bessel.EulerFormula(-ky * h) / Bessel.EulerFormula(ky * h);
-
-            return ((D(h, ky, p, p1,  y,  a1,  a0,  m) * QH(h, ky, p, p1, y, a1, a0, m)) - Bessel.EulerFormula(-ky * h)) / Bessel.EulerFormula(ky * h);
+            return ((D(h, ky, p, p1,  y,  a1,  a0,  m) * QH(h, ky, p, p1, y, a1, a0, m)) - Bessel.EulerFormula(-ky * Math.Cos(a * Math.PI / 180d) * h)) / Bessel.EulerFormula(ky * Math.Cos(a * Math.PI / 180d) * h);
         }
 
         public static double E(double y, double ky, double a1, double a0, double m)
